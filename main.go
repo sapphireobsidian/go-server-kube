@@ -5,8 +5,12 @@ import (
 	"log"
 	"net/http"
 
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/go/server/context"
 	"github.com/gorilla/mux"
 )
+
+var appContext = context.ApplicationContext{}
 
 func main() {
 
@@ -57,6 +61,24 @@ func ProcessRoot(w http.ResponseWriter, r *http.Request) {
 }
 
 func ProcessTestSql(w http.ResponseWriter, r *http.Request) {
+
+	{
+		err := appContext.Load()
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(fmt.Sprintf(`{Message: "%v"}`, err.Error())))
+			return
+		}
+	}
+
+	results, err := appContext.Database().Query("SELECT CURRENT_TIMESTAMP")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(fmt.Sprintf(`{Message: "%v"}`, err.Error())))
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf(`{Message: "%v"}`, "OK")))
+	w.Write([]byte(fmt.Sprintf(`{Message: "%v", Next=%v}`, "OK", results.Next())))
+
 }
