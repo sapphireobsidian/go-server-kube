@@ -6,6 +6,7 @@ import (
 	"log"
 
 	redis "github.com/go-redis/redis/v8"
+	"github.com/go/server/application"
 )
 
 type ApplicationContext struct {
@@ -42,7 +43,8 @@ func (ctx *ApplicationContext) LoadDatabase() error {
 	}
 
 	log.Printf("Opening Database Connection.")
-	db, err := sql.Open("mysql", "xxxx:yyyy@tcp(localhost:3307)/mysql")
+	//db, err := sql.Open("mysql", "b2b:P9173usjs@tcp(localhost:3307)/mysql")
+	db, err := sql.Open("mysql", application.DatabaseUrl)
 
 	if err != nil {
 		return fmt.Errorf("%v", err)
@@ -64,9 +66,9 @@ func (ctx *ApplicationContext) LoadRedis() error {
 
 	log.Printf("Opening Redis Connection.")
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Addr:     application.RedisUrl,
+		Password: application.RedisPassword, // no password set
+		DB:       0,                         // use default DB
 	})
 
 	ctx.rdb = rdb
