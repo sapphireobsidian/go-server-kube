@@ -18,11 +18,7 @@ func main() {
 
 	parentRouter.HandleFunc("/", ProcessRoot).Methods("GET")
 
-<<<<<<< HEAD
 	http.ListenAndServe(":8080", parentRouter)
-=======
-	http.ListenAndServe(":10000", parentRouter)
->>>>>>> fa17b32824163e69b394241027f381806621e5ea
 
 }
 
@@ -75,18 +71,14 @@ func ProcessTestSql(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-<<<<<<< HEAD
 	results, err := appContext.Database().Query("SELECT User from user;")
-=======
-	results, err := appContext.Database().Query("SELECT CURRENT_TIMESTAMP")
->>>>>>> fa17b32824163e69b394241027f381806621e5ea
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(fmt.Sprintf(`{Message: "%v"}`, err.Error())))
 		return
 	}
 
-<<<<<<< HEAD
 	var uname string
 	var unames []string
 	for results.Next() {
@@ -100,9 +92,5 @@ func ProcessTestSql(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(fmt.Sprintf(`{Message: "%v", Next=%v}`, "OK", unames)))
-=======
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf(`{Message: "%v", Next=%v}`, "OK", results.Next())))
->>>>>>> fa17b32824163e69b394241027f381806621e5ea
 
 }

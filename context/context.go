@@ -17,16 +17,12 @@ func (ctx *ApplicationContext) Load() error {
 		return nil
 	}
 
-<<<<<<< HEAD
 	log.Printf("Loading Application Context. %v %p", ctx, ctx)
 
 	log.Printf("Opening Database Connection.")
-	db, err := sql.Open("mysql", "b2b:P9173usjs@tcp(localhost:3307)/mysql")
-	//db, err := sql.Open("mysql", "root:12345678@tcp(localhost:3307)/mysql")
-=======
-	log.Printf("Opening Database Connection.")
-	db, err := sql.Open("mysql", "xxxx:dddd@tcp(localhost:3307)/demo")
->>>>>>> fa17b32824163e69b394241027f381806621e5ea
+
+	db, err := sql.Open("mysql", "xxx:yyyy@tcp(localhost:3307)/mysql")
+
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}
